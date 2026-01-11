@@ -1,1 +1,572 @@
-tetrtrg
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>АгроЛаб — образовательная агролаборатория</title>
+  <style>
+    :root {
+      --emerald: #2e8b57;
+      --emerald-dark: #3a9b4f;
+      --warm-white: #f9f6f0;
+      --deep-blue: #1a365d;
+      --gold: #e6b422;
+      --steel: #6c757d;
+      --shadow: 0 18px 40px rgba(26, 54, 93, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", "Inter", sans-serif;
+      background: var(--warm-white);
+      color: #1e2a33;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1140px, 92%);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(249, 246, 240, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(26, 54, 93, 0.08);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      color: var(--deep-blue);
+    }
+
+    .logo-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--emerald), var(--gold));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--deep-blue);
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      border-color: var(--emerald);
+    }
+
+    .hero {
+      padding: 70px 0 90px;
+      background: linear-gradient(120deg, rgba(26, 54, 93, 0.85), rgba(26, 54, 93, 0.65)),
+        url("https://images.unsplash.com/photo-1518384401463-d3876163c195?auto=format&fit=crop&w=1600&q=80") center/cover;
+      color: #fff;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: center;
+      gap: 32px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 24px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--emerald);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(46, 139, 87, 0.25);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .section {
+      padding: 70px 0;
+    }
+
+    .section-title {
+      font-size: 32px;
+      color: var(--deep-blue);
+      margin-bottom: 14px;
+    }
+
+    .section-subtitle {
+      color: var(--steel);
+      margin-bottom: 36px;
+      max-width: 720px;
+    }
+
+    .stats-grid,
+    .cards-grid,
+    .projects-grid,
+    .partners-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .stat-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 8px;
+    }
+
+    .stat-card span {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--emerald);
+    }
+
+    .cards-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .card {
+      background: #fff;
+      padding: 24px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 12px;
+    }
+
+    .card h3 {
+      font-size: 18px;
+      color: var(--deep-blue);
+    }
+
+    .card p {
+      color: var(--steel);
+      font-size: 14px;
+    }
+
+    .projects-grid {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .project-card {
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card img {
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .project-body {
+      padding: 18px;
+      display: grid;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .project-body h4 {
+      color: var(--deep-blue);
+    }
+
+    .project-body p {
+      color: var(--steel);
+      font-size: 14px;
+      flex: 1;
+    }
+
+    .partners-grid {
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+
+    .partner-chip {
+      background: #fff;
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      color: var(--deep-blue);
+      font-weight: 600;
+      box-shadow: var(--shadow);
+    }
+
+    .media-banner {
+      background: linear-gradient(135deg, rgba(46, 139, 87, 0.12), rgba(26, 54, 93, 0.1));
+      border-radius: 24px;
+      padding: 32px;
+      display: grid;
+      gap: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
+    }
+
+    .contact-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 8px;
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+    }
+
+    input,
+    textarea {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(26, 54, 93, 0.15);
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    footer {
+      background: var(--deep-blue);
+      color: #fff;
+      padding: 32px 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .footer-grid h4 {
+      margin-bottom: 10px;
+    }
+
+    .footer-grid p,
+    .footer-grid a {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+    }
+
+    .footer-bottom {
+      margin-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 16px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    @media (max-width: 720px) {
+      nav ul {
+        justify-content: flex-start;
+      }
+
+      .hero {
+        padding: 50px 0 70px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <div class="logo-badge">АЛ</div>
+        <div>
+          <div>АгроЛаб</div>
+          <small style="color: var(--steel);">агролаборатория для школьников</small>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#about">О лаборатории</a></li>
+          <li><a href="#programs">Программы</a></li>
+          <li><a href="#projects">Проекты</a></li>
+          <li><a href="#partners">Партнёры</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <div>
+        <h1>АгроЛаб — где наука встречается с полем</h1>
+        <p>Образовательная агролаборатория МАОУ «СШ №1 им. М. Аверина» помогает школьникам понимать устойчивое сельское хозяйство, биотехнологии и цифровое АПК.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#about">Узнать больше</a>
+          <a class="btn btn-outline" href="#contacts">Присоединиться к проекту</a>
+        </div>
+      </div>
+      <div class="media-banner">
+        <strong>Тестовая версия сайта</strong>
+        <p>Здесь собраны ключевые блоки будущей платформы: миссия, программы, проекты, партнёрства и контактная форма.</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <span style="background: #fff; padding: 8px 14px; border-radius: 999px; color: var(--deep-blue); font-weight: 600;">Инновации</span>
+          <span style="background: #fff; padding: 8px 14px; border-radius: 999px; color: var(--deep-blue); font-weight: 600;">Профориентация</span>
+          <span style="background: #fff; padding: 8px 14px; border-radius: 999px; color: var(--deep-blue); font-weight: 600;">Школьные проекты</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="container">
+      <h2 class="section-title">Наши достижения</h2>
+      <p class="section-subtitle">Коротко о том, как агролаборатория помогает региону и школьникам развивать исследовательскую культуру.</p>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span>🥇 1 место</span>
+          <p>на Всероссийском слёте агроклассов</p>
+        </div>
+        <div class="stat-card">
+          <span>🌱 50+</span>
+          <p>учеников вовлечено в исследования</p>
+        </div>
+        <div class="stat-card">
+          <span>🤝 12</span>
+          <p>партнёров из АПК и образования</p>
+        </div>
+        <div class="stat-card">
+          <span>📊 3 года</span>
+          <p>успешной работы (с 2023 г.)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="programs">
+    <div class="container">
+      <h2 class="section-title">Направления деятельности</h2>
+      <p class="section-subtitle">Мы создаём среду, где школьники могут попробовать себя в исследовательских, практических и технологических проектах.</p>
+      <div class="cards-grid">
+        <div class="card">
+          <h3>Научные исследования</h3>
+          <p>Эксперименты, мониторинги и участие в биологических хакатонах.</p>
+        </div>
+        <div class="card">
+          <h3>Профориентация</h3>
+          <p>Экскурсии на фермы, встречи с агрономами и ветеринарами.</p>
+        </div>
+        <div class="card">
+          <h3>Экологические инициативы</h3>
+          <p>Экопатруль, проекты по защите биоразнообразия и зелёных зон.</p>
+        </div>
+        <div class="card">
+          <h3>Цифровое АПК</h3>
+          <p>БПЛА, дистанционное зондирование и умные решения для агросектора.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="projects">
+    <div class="container">
+      <h2 class="section-title">Актуальные проекты</h2>
+      <p class="section-subtitle">Каждый проект можно адаптировать под формат вашей школы — очно или дистанционно.</p>
+      <div class="projects-grid">
+        <article class="project-card">
+          <img src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?auto=format&fit=crop&w=800&q=80" alt="Микрозелень" />
+          <div class="project-body">
+            <h4>«Инвазивы под микроскопом»</h4>
+            <p>Зимний запуск проекта о распространении инвазивных видов и методах наблюдения.</p>
+            <a class="btn btn-primary" href="#contacts">Подробнее</a>
+          </div>
+        </article>
+        <article class="project-card">
+          <img src="https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=800&q=80" alt="Эксперимент" />
+          <div class="project-body">
+            <h4>«Микрозелень в классе»</h4>
+            <p>Сравниваем субстраты, измеряем рост и готовим рекомендации для школьных теплиц.</p>
+            <a class="btn btn-primary" href="#contacts">Подробнее</a>
+          </div>
+        </article>
+        <article class="project-card">
+          <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&q=80" alt="Лесной мониторинг" />
+          <div class="project-body">
+            <h4>«Экопатруль-2025»</h4>
+            <p>Мониторинг лесных территорий и практикумы по охране природы.</p>
+            <a class="btn btn-primary" href="#contacts">Подробнее</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="partners">
+    <div class="container">
+      <h2 class="section-title">Партнёры</h2>
+      <p class="section-subtitle">Мы сотрудничаем с вузами, техникумами и агропредприятиями, чтобы проекты имели практическую ценность.</p>
+      <div class="partners-grid">
+        <div class="partner-chip">НовГУ</div>
+        <div class="partner-chip">Белгранкорм</div>
+        <div class="partner-chip">Валдайский техникум</div>
+        <div class="partner-chip">Нацпарк «Валдайский»</div>
+        <div class="partner-chip">Кванториум</div>
+        <div class="partner-chip">Движение Первых</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Медиа и ресурсы</h2>
+      <p class="section-subtitle">Публикуем фото, видео, методические материалы и задания для педагогов и учеников.</p>
+      <div class="media-banner">
+        <strong>Скоро на сайте</strong>
+        <p>Фотогалерея проектов, видеоэкскурсии и блок «Угрозы растительному миру» с интерактивными заданиями.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contacts">
+    <div class="container">
+      <h2 class="section-title">Контакты</h2>
+      <p class="section-subtitle">Оставьте заявку — мы свяжемся с вами, чтобы обсудить сотрудничество и участие в проектах.</p>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h4>АгроЛаб</h4>
+          <p>МАОУ «СШ №1 им. М. Аверина»</p>
+          <p>г. Великий Новгород, ул. Академическая, 14</p>
+          <p>+7 (8162) 00-00-00</p>
+          <p>agrolab@example.ru</p>
+          <p>ВКонтакте · Telegram · «Движение Первых»</p>
+        </div>
+        <div class="contact-card">
+          <h4>Форма обратной связи</h4>
+          <form>
+            <input type="text" name="name" placeholder="Ваше имя" required />
+            <input type="email" name="email" placeholder="Электронная почта" required />
+            <textarea name="message" placeholder="Опишите, как мы можем помочь"></textarea>
+            <button class="btn btn-primary" type="submit">Отправить заявку</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>АгроЛаб</h4>
+          <p>Центр инноваций, образования и научно-практической деятельности в сфере АПК.</p>
+        </div>
+        <div>
+          <h4>Разделы</h4>
+          <p><a href="#about">О лаборатории</a></p>
+          <p><a href="#programs">Программы</a></p>
+          <p><a href="#projects">Проекты</a></p>
+          <p><a href="#contacts">Контакты</a></p>
+        </div>
+        <div>
+          <h4>Мы в сети</h4>
+          <p>vk.com/agrolab</p>
+          <p>t.me/agrolab</p>
+          <p>agroclass@news.ru</p>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 АгроЛаб. МАОУ «СШ №1 им. М. Аверина»</div>
+    </div>
+  </footer>
+</body>
+</html>
