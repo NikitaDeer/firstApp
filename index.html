@@ -1,572 +1,102 @@
-<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>АгроЛаб — образовательная агролаборатория</title>
-  <style>
-    :root {
-      --emerald: #2e8b57;
-      --emerald-dark: #3a9b4f;
-      --warm-white: #f9f6f0;
-      --deep-blue: #1a365d;
-      --gold: #e6b422;
-      --steel: #6c757d;
-      --shadow: 0 18px 40px rgba(26, 54, 93, 0.12);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: "Segoe UI", "Inter", sans-serif;
-      background: var(--warm-white);
-      color: #1e2a33;
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    .container {
-      width: min(1140px, 92%);
-      margin: 0 auto;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: rgba(249, 246, 240, 0.96);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(26, 54, 93, 0.08);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 0;
-      gap: 24px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 700;
-      color: var(--deep-blue);
-    }
-
-    .logo-badge {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--emerald), var(--gold));
-      display: grid;
-      place-items: center;
-      color: #fff;
-      font-weight: 700;
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    nav a {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--deep-blue);
-      padding-bottom: 4px;
-      border-bottom: 2px solid transparent;
-      transition: border-color 0.2s ease;
-    }
-
-    nav a:hover,
-    nav a:focus {
-      border-color: var(--emerald);
-    }
-
-    .hero {
-      padding: 70px 0 90px;
-      background: linear-gradient(120deg, rgba(26, 54, 93, 0.85), rgba(26, 54, 93, 0.65)),
-        url("https://images.unsplash.com/photo-1518384401463-d3876163c195?auto=format&fit=crop&w=1600&q=80") center/cover;
-      color: #fff;
-    }
-
-    .hero-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      align-items: center;
-      gap: 32px;
-    }
-
-    .hero h1 {
-      font-size: clamp(32px, 4vw, 52px);
-      line-height: 1.15;
-      margin-bottom: 16px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      margin-bottom: 24px;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      border: none;
-      padding: 12px 22px;
-      border-radius: 999px;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .btn-primary {
-      background: var(--emerald);
-      color: #fff;
-      box-shadow: 0 12px 24px rgba(46, 139, 87, 0.25);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.6);
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .section {
-      padding: 70px 0;
-    }
-
-    .section-title {
-      font-size: 32px;
-      color: var(--deep-blue);
-      margin-bottom: 14px;
-    }
-
-    .section-subtitle {
-      color: var(--steel);
-      margin-bottom: 36px;
-      max-width: 720px;
-    }
-
-    .stats-grid,
-    .cards-grid,
-    .projects-grid,
-    .partners-grid {
-      display: grid;
-      gap: 20px;
-    }
-
-    .stats-grid {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-
-    .stat-card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      display: grid;
-      gap: 8px;
-    }
-
-    .stat-card span {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--emerald);
-    }
-
-    .cards-grid {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-
-    .card {
-      background: #fff;
-      padding: 24px;
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      display: grid;
-      gap: 12px;
-    }
-
-    .card h3 {
-      font-size: 18px;
-      color: var(--deep-blue);
-    }
-
-    .card p {
-      color: var(--steel);
-      font-size: 14px;
-    }
-
-    .projects-grid {
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    }
-
-    .project-card {
-      background: #fff;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-card img {
-      height: 160px;
-      object-fit: cover;
-    }
-
-    .project-body {
-      padding: 18px;
-      display: grid;
-      gap: 10px;
-      flex: 1;
-    }
-
-    .project-body h4 {
-      color: var(--deep-blue);
-    }
-
-    .project-body p {
-      color: var(--steel);
-      font-size: 14px;
-      flex: 1;
-    }
-
-    .partners-grid {
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    }
-
-    .partner-chip {
-      background: #fff;
-      border-radius: 14px;
-      padding: 16px;
-      text-align: center;
-      color: var(--deep-blue);
-      font-weight: 600;
-      box-shadow: var(--shadow);
-    }
-
-    .media-banner {
-      background: linear-gradient(135deg, rgba(46, 139, 87, 0.12), rgba(26, 54, 93, 0.1));
-      border-radius: 24px;
-      padding: 32px;
-      display: grid;
-      gap: 16px;
-      box-shadow: var(--shadow);
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 22px;
-    }
-
-    .contact-card {
-      background: #fff;
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: var(--shadow);
-      display: grid;
-      gap: 8px;
-    }
-
-    form {
-      display: grid;
-      gap: 12px;
-    }
-
-    input,
-    textarea {
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid rgba(26, 54, 93, 0.15);
-      font-size: 14px;
-      font-family: inherit;
-    }
-
-    textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
-
-    footer {
-      background: var(--deep-blue);
-      color: #fff;
-      padding: 32px 0;
-    }
-
-    .footer-grid {
-      display: grid;
-      gap: 24px;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-
-    .footer-grid h4 {
-      margin-bottom: 10px;
-    }
-
-    .footer-grid p,
-    .footer-grid a {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 14px;
-    }
-
-    .footer-bottom {
-      margin-top: 24px;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-      padding-top: 16px;
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    @media (max-width: 720px) {
-      nav ul {
-        justify-content: flex-start;
-      }
-
-      .hero {
-        padding: 50px 0 70px;
-      }
-
-      .hero-actions {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>АгроЛаб — образовательная агролаборатория</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--g:#2e8b57;--b:#1a365d;--w:#f9f6f0;--y:#e6b422;--s:#6c757d;--sh:0 12px 28px rgba(26,54,93,.12)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font:400 17px/1.55 "Source Sans 3",sans-serif;background:radial-gradient(circle at 0 0,rgba(58,155,79,.16),transparent 30%),var(--w);color:#1e2b36}
+h1,h2,h3{font-family:"Exo 2",sans-serif;color:var(--b);line-height:1.2}h2{margin-bottom:14px}a{text-decoration:none;color:inherit}img{max-width:100%;display:block}
+.container{width:min(1140px,92%);margin:auto}.section{padding:84px 0 104px}.lead{color:var(--s);margin:10px 0 36px}.label{color:var(--g);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+header{position:sticky;top:0;z-index:10;background:rgba(249,246,240,.96);backdrop-filter:blur(6px);border-bottom:1px solid rgba(26,54,93,.12)}
+.top{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}.logo{display:flex;align-items:center;gap:11px}.logo-mark{width:52px;height:52px;border-radius:12px;object-fit:cover;box-shadow:var(--sh)}
+nav ul{list-style:none;display:flex;gap:16px;flex-wrap:wrap;font-weight:600;font-size:15px}nav a{border-bottom:2px solid transparent;padding-bottom:3px}nav a:hover{color:var(--g);border-color:var(--g)}
+.hero{min-height:66vh;display:grid;align-items:center;color:#fff;background:linear-gradient(110deg,rgba(26,54,93,.92),rgba(26,54,93,.6)),url("img/photo_10_2026-02-04_20-04-08.jpg") center/cover}
+.hero h1{font-size:clamp(36px,5vw,62px);color:#fff;max-width:11ch}.hero p{max-width:58ch;margin:14px 0 24px;color:rgba(255,255,255,.92)}.hero-wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:20px}
+.note{background:rgba(255,255,255,.12);padding:20px;border:1px solid rgba(255,255,255,.35);border-radius:16px;box-shadow:var(--sh)}.note ul{margin:10px 0 0 16px}
+.btn{display:inline-block;padding:11px 18px;border-radius:999px;font-weight:700}.btn-main{background:var(--g);color:#fff;margin-right:8px}.btn-alt{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.55)}
+.grid4,.grid3,.grid2{display:grid;gap:14px}.grid4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:#fff;border-radius:16px;box-shadow:var(--sh);padding:22px 20px 30px}.stat strong{display:block;font:800 29px/1 "Exo 2";color:var(--b);margin-bottom:5px}
+.projects .card{border-top:4px solid var(--b)} .cards-list{margin:10px 0 0 17px;color:var(--s)} .cards-list li{margin-bottom:10px}
+.marquee{overflow:hidden;background:#fff;border-radius:16px;box-shadow:var(--sh);padding:16px 0}.track{display:flex;gap:12px;width:max-content;animation:run 24s linear infinite}.chip{min-width:220px;text-align:center;padding:10px 12px;border-radius:11px;background:linear-gradient(120deg,rgba(46,139,87,.14),rgba(230,180,34,.2));font-weight:700;color:var(--b)}@keyframes run{to{transform:translateX(-50%)}}
+.gallery{display:grid;gap:12px;grid-template-columns:repeat(4,minmax(0,1fr))}.gallery article{background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--sh)}.gallery img{aspect-ratio:4/3;object-fit:cover}.gallery p{padding:10px 12px 16px;color:var(--s);font-size:14px}
+.contacts{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}.map iframe{width:100%;height:100%;min-height:420px;border:0;border-radius:16px;box-shadow:var(--sh)}
+form{display:grid;gap:8px;margin-top:8px}input,textarea{border:1px solid rgba(26,54,93,.2);border-radius:10px;padding:10px;font:inherit}textarea{min-height:96px;resize:vertical}
+footer{margin-top:72px;background:linear-gradient(130deg,#122b4a,#1a365d);color:#fff;padding:34px 0}.foot{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px}.foot p,.foot a{color:rgba(255,255,255,.85);font-size:15px}.contact-links{display:grid;gap:10px;margin-top:10px}.contact-link{display:flex;align-items:center;padding:10px 12px;border:1px solid rgba(26,54,93,.16);border-radius:10px;background:#f8fbf8;color:var(--b);font-weight:600}.contact-link:hover{border-color:var(--g);color:var(--g)}.footer-links{display:grid;gap:8px;margin-top:8px}.footer-link{display:inline-flex;align-items:center;padding:8px 10px;border-radius:9px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2)}.footer-link:hover{background:rgba(255,255,255,.2)}.copy{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.25);font-size:14px;color:rgba(255,255,255,.75)}
+@media (max-width:1060px){.grid4,.grid3,.gallery,.contacts,.hero-wrap,.grid2,.foot{grid-template-columns:1fr 1fr}.hero-wrap{grid-template-columns:1fr}.map iframe{min-height:320px}}
+@media (max-width:700px){.section{padding:64px 0 78px}.grid4,.grid3,.gallery,.contacts,.grid2,.foot{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column;padding:12px 0}}
+</style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <div class="logo">
-        <div class="logo-badge">АЛ</div>
-        <div>
-          <div>АгроЛаб</div>
-          <small style="color: var(--steel);">агролаборатория для школьников</small>
-        </div>
-      </div>
-      <nav>
-        <ul>
-          <li><a href="#about">О лаборатории</a></li>
-          <li><a href="#programs">Программы</a></li>
-          <li><a href="#projects">Проекты</a></li>
-          <li><a href="#partners">Партнёры</a></li>
-          <li><a href="#contacts">Контакты</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<header>
+  <div class="container top">
+    <a class="logo" href="#home"><img class="logo-mark" src="img/file_000000006d1071f4ba3719084c00557d.png" alt="Логотип АгроЛаб"><span><strong>АгроЛаб</strong><br><small style="color:var(--s)">МАОУ «СШ №1 им. М. Аверина»</small></span></a>
+    <nav><ul><li><a href="#about">О лаборатории</a></li><li><a href="#programs">Программы</a></li><li><a href="#projects">Проекты</a></li><li><a href="#partners">Партнёры</a></li><li><a href="#media">Медиа</a></li><li><a href="#resources">Ресурсы</a></li><li><a href="#contacts">Контакты</a></li></ul></nav>
+  </div>
+</header>
+<main>
+<section class="hero" id="home"><div class="container hero-wrap"><div><span class="label" style="color:#dff7e2">Образовательная агролаборатория</span><h1>АгроЛаб — где наука встречается с полем</h1><p>Центр инноваций, профориентации и научно-практической деятельности в сфере АПК для учеников 5–9 классов, педагогов и родителей.</p><a class="btn btn-main" href="#about">Узнать больше</a><a class="btn btn-alt" href="#contacts">Присоединиться</a></div><aside class="note"><h3 style="color:#fff">Что делает площадка</h3><ul><li>Поддержка школьных проектов</li><li>Профориентация и практика</li><li>Взаимодействие с партнёрами АПК</li><li>Доступные материалы для отдалённых школ</li></ul></aside></div></section>
+<section class="section"><div class="container grid4"><article class="card stat"><strong>1 место</strong><p>Всероссийский слёт агроклассов</p></article><article class="card stat"><strong>30+</strong><p>вовлечённость учеников</p></article><article class="card stat"><strong>5</strong><p>партнёрств с АПК и образованием</p></article><article class="card stat"><strong>с 2023</strong><p>года успешной работы</p></article></div></section>
+<section class="section" id="about"><div class="container"><span class="label">О лаборатории</span><h2>Миссия, оборудование, команда, история</h2><p class="lead">Профессиональный, но понятный школьникам подход: реальная наука, понятные форматы и прикладные результаты.</p><div class="grid2"><article class="card"><h3>Миссия и цели</h3><p class="lead">Формируем исследовательскую культуру и экологическое мышление для будущего АПК.</p></article><article class="card"><h3>Наше оборудование</h3><p class="lead">Микроскопы, датчики, мини-теплицы, наборы анализа и цифровые модули наблюдения.</p></article><article class="card"><h3>Команда</h3><p class="lead">Педагоги, методисты и эксперты из агропредприятий и образовательных организаций.</p></article><article class="card"><h3>История создания</h3><p class="lead">Проект запущен в 2023 году как лаборатория практической профориентации.</p></article></div></div></section>
+<section class="section" id="programs" style="background:linear-gradient(180deg,transparent,rgba(46,139,87,.08))"><div class="container"><span class="label">Образовательные программы</span><h2>Форматы работы</h2><div class="grid4"><article class="card"><h3>Агрокласс (6–8 кл.)</h3><ul class="cards-list"><li>Практика по микрозелени</li><li>Лабораторные опыты</li></ul></article><article class="card"><h3>Профориентационные модули</h3><ul class="cards-list"><li>Экскурсии и профпробы</li><li>Встречи с экспертами</li></ul></article><article class="card"><h3>Мастер-классы</h3><ul class="cards-list"><li>Экопрактикумы</li><li>Командные кейсы</li></ul></article><article class="card"><h3>Онлайн-курсы</h3><ul class="cards-list"><li>Для отдалённых школ</li><li>Видео и чек-листы</li></ul></article></div></div></section>
+<section class="section projects" id="projects"><div class="container"><span class="label">Проекты и исследования</span><h2>Текущие, архив, конкурсы</h2><div class="grid3"><article class="card"><h3>Текущие</h3><ul class="cards-list"><li>«Инвазивы под микроскопом»</li><li>«Микрозелень в классе»</li><li>«Экопатруль-2025»</li></ul></article><article class="card"><h3>Архив</h3><ul class="cards-list"><li>Микрозелень на субстратах</li><li>Световой режим рассады</li><li>Почвенный дневник школы</li></ul></article><article class="card"><h3>Конкурсы</h3><ul class="cards-list"><li>Агродиктант</li><li>BIO-хакатон</li><li>Школьные экоинициативы</li></ul></article></div></div></section>
+<section class="section" id="partners" style="background:linear-gradient(180deg,rgba(26,54,93,.05),transparent)"><div class="container"><span class="label">Партнёры</span><h2>Органы власти, образование, АПК, природоохрана</h2><p class="lead">Горизонтальная карусель партнёров:</p><div class="marquee"><div class="track"><span class="chip">НовГУ</span><span class="chip">Белгранкорм</span><span class="chip">Валдайский аграрный техникум</span><span class="chip">Нацпарк «Валдайский»</span><span class="chip">Кванториум</span><span class="chip">НовГУ</span><span class="chip">Белгранкорм</span><span class="chip">Валдайский аграрный техникум</span><span class="chip">Нацпарк «Валдайский»</span><span class="chip">Кванториум</span></div></div></div></section>
+<section class="section" id="media"><div class="container"><span class="label">Медиа</span><h2>Фотогалерея, видео и публикации</h2><p class="lead">Добавлены фотографии из папки <code>img</code>.</p><div class="gallery"><article><img src="img/photo_1_2026-02-04_20-04-01.jpg" alt="Лабораторное занятие"><p>Лабораторный практикум</p></article><article><img src="img/photo_2_2026-02-04_20-04-01.jpg" alt="Исследования в классе"><p>Исследования в классе</p></article><article><img src="img/photo_3_2026-02-04_20-04-01.jpg" alt="Проектная работа"><p>Проектная сессия</p></article><article><img src="img/photo_4_2026-02-04_20-04-01.jpg" alt="Полевой мониторинг"><p>Полевой мониторинг</p></article><article><img src="img/photo_5_2026-02-04_20-04-01.jpg" alt="Экологический выезд"><p>Экологический выезд</p></article><article><img src="img/photo_6_2026-02-04_20-04-01.jpg" alt="Обсуждение итогов"><p>Разбор результатов</p></article><article><img src="img/photo_7_2026-02-04_20-04-08.jpg" alt="Работа с оборудованием"><p>Работа с оборудованием</p></article><article><img src="img/photo_8_2026-02-04_20-04-08.jpg" alt="Командное исследование"><p>Командное исследование</p></article></div><div class="grid2" style="margin-top:24px"><article class="card"><h3>Видео с занятий и экскурсий</h3><ul class="cards-list"><li>Сбор данных для школьного проекта</li><li>Практикум по анализу почвы</li><li>Экскурсии к партнёрам</li></ul></article><article class="card"><h3>Публикации и СМИ</h3><ul class="cards-list"><li>Отчёты о сезонных проектах</li><li>Материалы для родителей</li><li>Анонсы конкурсов</li></ul></article></div></div></section>
+<section class="section" id="resources" style="background:linear-gradient(180deg,rgba(230,180,34,.12),transparent)"><div class="container"><span class="label">Ресурсы</span><h2>Для педагогов и учеников</h2><div class="grid3"><article class="card"><h3>Методические материалы</h3><ul class="cards-list"><li>Сценарии занятий</li><li>Шаблоны отчётов</li><li>Критерии оценки</li></ul></article><article class="card"><h3>Интерактивные задания</h3><ul class="cards-list"><li>Мини-квест «Найди инвазив»</li><li>Чек-листы наблюдений</li><li>Короткие тесты</li></ul></article><article class="card"><h3>Угрозы растительному миру</h3><ul class="cards-list"><li>Инвазивные виды</li><li>Болезни растений</li><li>Профилактика и фотоотчёты</li></ul></article></div><div class="gallery" style="margin-top:24px"><article><img src="img/photo_9_2026-02-04_20-04-08.jpg" alt="Материалы"><p>Материалы для занятий</p></article><article><img src="img/photo_11_2026-02-04_20-04-08.jpg" alt="Задание"><p>Интерактивное задание</p></article><article><img src="img/photo_12_2026-02-04_20-04-08.jpg" alt="Наблюдение"><p>Наблюдение за растениями</p></article><article><img src="img/photo_13_2026-02-04_20-04-08.jpg" alt="Отчёт"><p>Проектный отчёт</p></article></div></div></section>
+<section class="section" id="contacts"><div class="container"><span class="label">Контакты</span><h2>Связаться с АгроЛабом</h2><div class="contacts"><div class="grid2"><article class="card"><h3>Контакты</h3><div class="contact-links"><span class="contact-link">МАОУ «СШ №1 им. М. Аверина»</span><a class="contact-link" href="https://yandex.ru/maps/?text=%D0%B3.%20%D0%92%D0%B0%D0%BB%D0%B4%D0%B0%D0%B9%2C%20%D1%83%D0%BB.%20%D0%9B%D1%83%D0%BD%D0%B0%D1%87%D0%B0%D1%80%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C%2027" target="_blank" rel="noopener noreferrer">Адрес: г. Валдай, ул. Луначарского д. 27</a><a class="contact-link" href="mailto:averinsch@yandex.ru">Email: averinsch@yandex.ru</a><a class="contact-link" href="tel:+78166620000">Телефон: +7 (81666) 2-00-00</a></div></article><article class="card"><h3>Соцсети</h3><div class="contact-links"><a class="contact-link" href="#" aria-label="Ссылка на ВКонтакте">ВКонтакте</a><a class="contact-link" href="#" aria-label="Ссылка на Telegram">Telegram-канал</a><a class="contact-link" href="#" aria-label="Ссылка на Движение Первых">Движение Первых</a></div></article><article class="card"><h3>Форма обратной связи</h3><form id="contact-form"><input type="text" name="name" placeholder="Ваше имя" required><input type="email" name="email" placeholder="Электронная почта" required><textarea name="message" placeholder="Опишите запрос" required></textarea><button class="btn btn-main" type="submit">Отправить заявку</button><p id="form-status" style="margin-top:8px;color:var(--s);font-size:14px"></p></form></article><article class="card"><h3>Для партнёров и школ</h3><p class="lead">Выездные мастер-классы, дистанционные модули и совместные проекты под ваши задачи.</p></article></div><div class="map"><iframe title="Карта проезда" src="https://yandex.ru/map-widget/v1/?text=%D0%B3.%20%D0%92%D0%B0%D0%BB%D0%B4%D0%B0%D0%B9%2C%20%D1%83%D0%BB.%20%D0%9B%D1%83%D0%BD%D0%B0%D1%87%D0%B0%D1%80%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C%2027&z=16" loading="lazy"></iframe></div></div></div></section>
+</main>
+<footer><div class="container"><div class="foot"><div><h3 style="color:#fff">АгроЛаб</h3><p>Центр инноваций, образования и научно-практической деятельности в сфере АПК.</p></div><div><h3 style="color:#fff">Разделы</h3><p><a href="#about">О лаборатории</a></p><p><a href="#projects">Проекты</a></p><p><a href="#media">Медиа</a></p><p><a href="#resources">Ресурсы</a></p></div><div><h3 style="color:#fff">Связь</h3><div class="footer-links"><a class="footer-link" href="https://yandex.ru/maps/?text=%D0%B3.%20%D0%92%D0%B0%D0%BB%D0%B4%D0%B0%D0%B9%2C%20%D1%83%D0%BB.%20%D0%9B%D1%83%D0%BD%D0%B0%D1%87%D0%B0%D1%80%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C%2027" target="_blank" rel="noopener noreferrer">г. Валдай, ул. Луначарского д. 27</a><a class="footer-link" href="mailto:averinsch@yandex.ru">averinsch@yandex.ru</a><a class="footer-link" href="#" aria-label="Ссылка на ВКонтакте">ВКонтакте</a><a class="footer-link" href="#" aria-label="Ссылка на Telegram">Telegram</a><a class="footer-link" href="#" aria-label="Ссылка на Движение Первых">Движение Первых</a></div></div></div><div class="copy">© 2026 АгроЛаб. МАОУ «СШ №1 им. М. Аверина»</div></div></footer>
+<script>
+(function () {
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  if (!form || !status) return;
 
-  <section class="hero">
-    <div class="container hero-content">
-      <div>
-        <h1>АгроЛаб — где наука встречается с полем</h1>
-        <p>Образовательная агролаборатория МАОУ «СШ №1 им. М. Аверина» помогает школьникам понимать устойчивое сельское хозяйство, биотехнологии и цифровое АПК.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#about">Узнать больше</a>
-          <a class="btn btn-outline" href="#contacts">Присоединиться к проекту</a>
-        </div>
-      </div>
-      <div class="media-banner">
-        <strong>Тестовая версия сайта</strong>
-        <p>Здесь собраны ключевые блоки будущей платформы: миссия, программы, проекты, партнёрства и контактная форма.</p>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-          <span style="background: #fff; padding: 8px 14px; border-radius: 999px; color: var(--deep-blue); font-weight: 600;">Инновации</span>
-          <span style="background: #fff; padding: 8px 14px; border-radius: 999px; color: var(--deep-blue); font-weight: 600;">Профориентация</span>
-          <span style="background: #fff; padding: 8px 14px; border-radius: 999px; color: var(--deep-blue); font-weight: 600;">Школьные проекты</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+    status.textContent = 'Отправляем заявку...';
 
-  <section class="section" id="about">
-    <div class="container">
-      <h2 class="section-title">Наши достижения</h2>
-      <p class="section-subtitle">Коротко о том, как агролаборатория помогает региону и школьникам развивать исследовательскую культуру.</p>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <span>🥇 1 место</span>
-          <p>на Всероссийском слёте агроклассов</p>
-        </div>
-        <div class="stat-card">
-          <span>🌱 50+</span>
-          <p>учеников вовлечено в исследования</p>
-        </div>
-        <div class="stat-card">
-          <span>🤝 12</span>
-          <p>партнёров из АПК и образования</p>
-        </div>
-        <div class="stat-card">
-          <span>📊 3 года</span>
-          <p>успешной работы (с 2023 г.)</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    const payload = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      message: form.message.value.trim()
+    };
 
-  <section class="section" id="programs">
-    <div class="container">
-      <h2 class="section-title">Направления деятельности</h2>
-      <p class="section-subtitle">Мы создаём среду, где школьники могут попробовать себя в исследовательских, практических и технологических проектах.</p>
-      <div class="cards-grid">
-        <div class="card">
-          <h3>Научные исследования</h3>
-          <p>Эксперименты, мониторинги и участие в биологических хакатонах.</p>
-        </div>
-        <div class="card">
-          <h3>Профориентация</h3>
-          <p>Экскурсии на фермы, встречи с агрономами и ветеринарами.</p>
-        </div>
-        <div class="card">
-          <h3>Экологические инициативы</h3>
-          <p>Экопатруль, проекты по защите биоразнообразия и зелёных зон.</p>
-        </div>
-        <div class="card">
-          <h3>Цифровое АПК</h3>
-          <p>БПЛА, дистанционное зондирование и умные решения для агросектора.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    // Если страница открыта как file://, отправляем на локальный сервер.
+    const apiUrl =
+      window.location.protocol === 'file:'
+        ? 'http://localhost:3000/api/applications'
+        : '/api/applications';
 
-  <section class="section" id="projects">
-    <div class="container">
-      <h2 class="section-title">Актуальные проекты</h2>
-      <p class="section-subtitle">Каждый проект можно адаптировать под формат вашей школы — очно или дистанционно.</p>
-      <div class="projects-grid">
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?auto=format&fit=crop&w=800&q=80" alt="Микрозелень" />
-          <div class="project-body">
-            <h4>«Инвазивы под микроскопом»</h4>
-            <p>Зимний запуск проекта о распространении инвазивных видов и методах наблюдения.</p>
-            <a class="btn btn-primary" href="#contacts">Подробнее</a>
-          </div>
-        </article>
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=800&q=80" alt="Эксперимент" />
-          <div class="project-body">
-            <h4>«Микрозелень в классе»</h4>
-            <p>Сравниваем субстраты, измеряем рост и готовим рекомендации для школьных теплиц.</p>
-            <a class="btn btn-primary" href="#contacts">Подробнее</a>
-          </div>
-        </article>
-        <article class="project-card">
-          <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&q=80" alt="Лесной мониторинг" />
-          <div class="project-body">
-            <h4>«Экопатруль-2025»</h4>
-            <p>Мониторинг лесных территорий и практикумы по охране природы.</p>
-            <a class="btn btn-primary" href="#contacts">Подробнее</a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
 
-  <section class="section" id="partners">
-    <div class="container">
-      <h2 class="section-title">Партнёры</h2>
-      <p class="section-subtitle">Мы сотрудничаем с вузами, техникумами и агропредприятиями, чтобы проекты имели практическую ценность.</p>
-      <div class="partners-grid">
-        <div class="partner-chip">НовГУ</div>
-        <div class="partner-chip">Белгранкорм</div>
-        <div class="partner-chip">Валдайский техникум</div>
-        <div class="partner-chip">Нацпарк «Валдайский»</div>
-        <div class="partner-chip">Кванториум</div>
-        <div class="partner-chip">Движение Первых</div>
-      </div>
-    </div>
-  </section>
+      if (!response.ok) {
+        const errorPayload = await response.json().catch(() => ({}));
+        throw new Error(errorPayload.error || 'Не удалось отправить заявку');
+      }
 
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Медиа и ресурсы</h2>
-      <p class="section-subtitle">Публикуем фото, видео, методические материалы и задания для педагогов и учеников.</p>
-      <div class="media-banner">
-        <strong>Скоро на сайте</strong>
-        <p>Фотогалерея проектов, видеоэкскурсии и блок «Угрозы растительному миру» с интерактивными заданиями.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="contacts">
-    <div class="container">
-      <h2 class="section-title">Контакты</h2>
-      <p class="section-subtitle">Оставьте заявку — мы свяжемся с вами, чтобы обсудить сотрудничество и участие в проектах.</p>
-      <div class="contact-grid">
-        <div class="contact-card">
-          <h4>АгроЛаб</h4>
-          <p>МАОУ «СШ №1 им. М. Аверина»</p>
-          <p>г. Великий Новгород, ул. Академическая, 14</p>
-          <p>+7 (8162) 00-00-00</p>
-          <p>agrolab@example.ru</p>
-          <p>ВКонтакте · Telegram · «Движение Первых»</p>
-        </div>
-        <div class="contact-card">
-          <h4>Форма обратной связи</h4>
-          <form>
-            <input type="text" name="name" placeholder="Ваше имя" required />
-            <input type="email" name="email" placeholder="Электронная почта" required />
-            <textarea name="message" placeholder="Опишите, как мы можем помочь"></textarea>
-            <button class="btn btn-primary" type="submit">Отправить заявку</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <h4>АгроЛаб</h4>
-          <p>Центр инноваций, образования и научно-практической деятельности в сфере АПК.</p>
-        </div>
-        <div>
-          <h4>Разделы</h4>
-          <p><a href="#about">О лаборатории</a></p>
-          <p><a href="#programs">Программы</a></p>
-          <p><a href="#projects">Проекты</a></p>
-          <p><a href="#contacts">Контакты</a></p>
-        </div>
-        <div>
-          <h4>Мы в сети</h4>
-          <p>vk.com/agrolab</p>
-          <p>t.me/agrolab</p>
-          <p>agroclass@news.ru</p>
-        </div>
-      </div>
-      <div class="footer-bottom">© 2026 АгроЛаб. МАОУ «СШ №1 им. М. Аверина»</div>
-    </div>
-  </footer>
+      form.reset();
+      status.textContent = 'Заявка отправлена. Мы свяжемся с вами.';
+    } catch (error) {
+      status.textContent = `Ошибка отправки: ${error.message}`;
+    }
+  });
+})();
+</script>
 </body>
 </html>
+
+
+
+
+
+
