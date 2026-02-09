@@ -36,8 +36,40 @@ function escapeHtml(text) {
 app.post('/api/applications', async (req, res) => {
   const { name, email, message } = req.body || {};
 
-  if (!name || !email || !message) {
-    return res.status(400).json({ ok: false, error: 'Заполните все поля' });
+  // Валидация на стороне сервера
+  const errors = [];
+  
+  // Проверка типа данных
+  if (typeof name !== 'string' || typeof email !== 'string' || typeof message !== 'string') {
+    return res.status(400).json({ ok: false, error: 'Некорректные типы данных' });
+  }
+  
+  // Валидация имени
+  const cleanName = name.trim();
+  if (cleanName.length < 2 || cleanName.length > 50) {
+    errors.push('Имя должно быть от 2 до 50 символов');
+  }
+  if (!/^[a-zA-Zа-яА-ЯёЁ\s\-]{2,50}$/.test(cleanName)) {
+    errors.push('Имя содержит недопустимые символы');
+  }
+  
+  // Валидация email
+  const cleanEmail = email.trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+    errors.push('Некорректный email');
+  }
+  if (cleanEmail.length > 100) {
+    errors.push('Email слишком длинный');
+  }
+  
+  // Валидация сообщения
+  const cleanMessage = message.trim();
+  if (cleanMessage.length < 5 || cleanMessage.length > 1000) {
+    errors.push('Сообщение должно быть от 5 до 1000 символов');
+  }
+  
+  if (errors.length > 0) {
+    return res.status(400).json({ ok: false, error: errors.join(', ') });
   }
 
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
@@ -47,10 +79,10 @@ app.post('/api/applications', async (req, res) => {
   const text = [
     'Новая заявка с сайта АгроЛаб',
     '',
-    `<b>Имя:</b> ${escapeHtml(name)}`,
-    `<b>Email:</b> ${escapeHtml(email)}`,
+    `<b>Имя:</b> ${escapeHtml(cleanName)}`,
+    `<b>Email:</b> ${escapeHtml(cleanEmail)}`,
     `<b>Сообщение:</b>`,
-    escapeHtml(message)
+    escapeHtml(cleanMessage)
   ].join('\n');
 
   try {
