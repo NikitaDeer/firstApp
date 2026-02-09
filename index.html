@@ -28,14 +28,100 @@ nav ul{list-style:none;display:flex;gap:16px;flex-wrap:wrap;font-weight:600;font
 form{display:grid;gap:8px;margin-top:8px}input,textarea{border:1px solid rgba(26,54,93,.2);border-radius:10px;padding:10px;font:inherit}textarea{min-height:96px;resize:vertical}
 footer{margin-top:72px;background:linear-gradient(130deg,#122b4a,#1a365d);color:#fff;padding:34px 0}.foot{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px}.foot p,.foot a{color:rgba(255,255,255,.85);font-size:15px}.contact-links{display:grid;gap:10px;margin-top:10px}.contact-link{display:flex;align-items:center;padding:10px 12px;border:1px solid rgba(26,54,93,.16);border-radius:10px;background:#f8fbf8;color:var(--b);font-weight:600}.contact-link:hover{border-color:var(--g);color:var(--g)}.footer-links{display:grid;gap:8px;margin-top:8px}.footer-link{display:inline-flex;align-items:center;padding:8px 10px;border-radius:9px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2)}.footer-link:hover{background:rgba(255,255,255,.2)}.copy{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.25);font-size:14px;color:rgba(255,255,255,.75)}
 @media (max-width:1060px){.grid4,.grid3,.gallery,.contacts,.hero-wrap,.grid2,.foot{grid-template-columns:1fr 1fr}.hero-wrap{grid-template-columns:1fr}.map iframe{min-height:320px}}
-@media (max-width:700px){.section{padding:64px 0 78px}.grid4,.grid3,.gallery,.contacts,.grid2,.foot{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column;padding:12px 0}}
+@media (max-width:700px){.section{padding:64px 0 78px}.grid4,.grid3,.gallery,.contacts,.grid2,.foot{grid-template-columns:1fr}.top{align-items:center;flex-direction:row;justify-content:space-between;padding:12px 0}}
+
+/* Стили для бургер-меню */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 20;
+}
+
+.hamburger {
+  width: 100%;
+  height: 3px;
+  background: var(--b);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.mobile-menu {
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .menu-toggle {
+    display: flex;
+  }
+  
+  nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 70%;
+    background: var(--w);
+    transition: right 0.3s ease;
+    z-index: 15;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+  }
+  
+  nav.active {
+    right: 0;
+  }
+  
+  .mobile-menu ul {
+    flex-direction: column;
+    padding: 60px 20px 20px;
+    gap: 20px;
+  }
+  
+  .top {
+    align-items: center;
+  }
+  
+  /* Анимация бургера */
+  .menu-toggle.active .hamburger:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+  
+  .menu-toggle.active .hamburger:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .menu-toggle.active .hamburger:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+}
 </style>
 </head>
 <body>
 <header>
   <div class="container top">
     <a class="logo" href="#home"><img class="logo-mark" src="img/file_000000006d1071f4ba3719084c00557d.png" alt="Логотип АгроЛаб"><span><strong>АгроЛаб</strong><br><small style="color:var(--s)">МАОУ «СШ №1 им. М. Аверина»</small></span></a>
-    <nav><ul><li><a href="#about">О лаборатории</a></li><li><a href="#programs">Программы</a></li><li><a href="#projects">Проекты</a></li><li><a href="#partners">Партнёры</a></li><li><a href="#media">Медиа</a></li><li><a href="#resources">Ресурсы</a></li><li><a href="#contacts">Контакты</a></li></ul></nav>
+    <button class="menu-toggle" aria-label="Открыть меню" aria-expanded="false">
+      <span class="hamburger"></span>
+      <span class="hamburger"></span>
+      <span class="hamburger"></span>
+    </button>
+    <nav class="mobile-menu">
+      <ul>
+        <li><a href="#about">О лаборатории</a></li>
+        <li><a href="#programs">Программы</a></li>
+        <li><a href="#projects">Проекты</a></li>
+        <li><a href="#partners">Партнёры</a></li>
+        <li><a href="#media">Медиа</a></li>
+        <li><a href="#resources">Ресурсы</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+    </nav>
   </div>
 </header>
 <main>
@@ -126,6 +212,27 @@ footer{margin-top:72px;background:linear-gradient(130deg,#122b4a,#1a365d);color:
       status.textContent = `Ошибка отправки: ${error.message}`;
     }
   });
+  
+  // Добавляем функциональность бургер-меню
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('nav');
+
+  if (menuToggle && nav) {
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      menuToggle.classList.toggle('active');
+      menuToggle.setAttribute('aria-expanded', nav.classList.contains('active'));
+    });
+    
+    // Закрытие меню при клике на ссылку
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('active');
+        menuToggle.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
 })();
 </script>
 </body>
